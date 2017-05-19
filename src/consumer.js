@@ -3,16 +3,10 @@ const knowledge = require('./adapter/knowledge')
 const config = require('./config')
 
 const eventAppeared = (subscription, event) => {
-
-    /*
-     var webshot = require('webshot')
-     webshot(event.raw, event.uuid + ".png", function(err) {
-     // screenshot now saved to google.png
-     });
-     */
-
-    knowledge.store(JSON.parse(event.originalEvent.data.toString()))
-
+    knowledge.store(
+        event.originalEvent.eventType,
+        JSON.parse(event.originalEvent.data.toString())
+    )
 }
 
 const subscriptionDropped = (subscription, reason, error) =>
