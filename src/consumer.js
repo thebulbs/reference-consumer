@@ -1,4 +1,4 @@
-const client = require('eventstore-node')
+const client = require('node-eventstore-client')
 const knowledge = require('./adapter/knowledge')
 const config = require('./config')
 
