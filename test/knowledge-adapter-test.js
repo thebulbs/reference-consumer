@@ -21,7 +21,10 @@ describe('Knowledge Adapter', function () {
             return Promise.resolve()
         })
         let reference = {
-            reference: 'asdasd',
+            reference: {
+                reference: "asd",
+                uuid: "123-123-123"
+            },
             bulb: {
                 summary: 'asdasd',
                 uuid: '9cc094c2-3e12-4b15-9d69-3cfe6240f6b7',
@@ -29,7 +32,7 @@ describe('Knowledge Adapter', function () {
         }
         KnowledgeAdapter.store("addReference", reference)
         sinon.assert.calledOnce(axiosPutStub)
-        sinon.assert.calledWith(axiosPutStub, config.knowledge.url + "/bulbs/" + reference.bulb.uuid + "/references", reference)
+        sinon.assert.calledWith(axiosPutStub, config.knowledge.url + "/bulbs/" + reference.bulb.uuid + "/references", reference.reference)
     })
 
 });
