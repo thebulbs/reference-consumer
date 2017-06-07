@@ -20,19 +20,33 @@ describe('Knowledge Adapter', function () {
         const axiosPutStub = sandbox.stub(axios, "put").callsFake(() => {
             return Promise.resolve()
         })
-        let reference = {
-            reference: {
-                reference: "asd",
-                uuid: "123-123-123"
+
+        let event = {
+            data: {
+                reference : {
+                    reference: "asd",
+                    uuid: "123-123-123"
+                },
+                bulb : {
+                    summary: 'asdasd',
+                    uuid: '9cc094c2-3e12-4b15-9d69-3cfe6240f6b7'
+                }
             },
-            bulb: {
-                summary: 'asdasd',
-                uuid: '9cc094c2-3e12-4b15-9d69-3cfe6240f6b7',
+            auth: {
+                user: "123",
+                token: "token"
             }
         }
-        KnowledgeAdapter.store("addReference", reference)
+
+        KnowledgeAdapter.store("addReference", event)
         sinon.assert.calledOnce(axiosPutStub)
-        sinon.assert.calledWith(axiosPutStub, config.knowledge.url + "/bulbs/" + reference.bulb.uuid + "/references", reference.reference)
+        sinon.assert.calledWith(axiosPutStub, {
+            url: config.knowledge.url + "/123/bulbs/" + event.data.bulb.uuid + "/references",
+            data: event.data.reference,
+            headers: {
+                Authorization: "Bearer: token"
+            }
+        })
     })
 
 });

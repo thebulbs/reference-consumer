@@ -3,11 +3,13 @@ const config = require('../config')
 
 module.exports = {
 
-    store: (type, data) => {
-        return axios.put(config.knowledge.url + '/bulbs/' + data.bulb.uuid + "/references", data.reference).then(() => {
-            console.log("successfully send new reference to knowledge api: " + JSON.stringify(data.reference))
-        }).catch((err) => {
-            console.log(err)
+    store: (type, payload) => {
+        return axios.put({
+            url: config.knowledge.url + '/' + payload.auth.user + '/bulbs/' + payload.data.bulb.uuid + "/references",
+            data: payload.data.reference,
+            headers: {
+                Authorization: "Bearer: " + payload.auth.token
+            }
         })
     }
 
