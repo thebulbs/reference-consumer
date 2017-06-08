@@ -42,13 +42,9 @@ describe('Knowledge Adapter', function () {
         sinon.assert.calledOnce(axiosPutStub)
         sinon.assert.calledWith(axiosPutStub,
             config.knowledge.url + "/123/bulbs/" + event.data.bulb.uuid + "/references",
-            {
-                data: event.data.reference,
-                headers: {
-                    Authorization: "Bearer: token"
-                }
-            }
+            event.data.reference
         )
+        sinon.assert.match(axios.defaults.headers.common['Authorization'], "Bearer: token")
     })
 
 });
